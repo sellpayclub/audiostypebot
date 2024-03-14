@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Áudio</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.7/plyr.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+      
+    body {
+      height: 100vh;
+      overflow: hidden;
+      margin: 0px;
+    }    
+
+    .audio-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: 'Open Sans', sans-serif;
+      cursor: pointer; 
+      width: 100px;
+    }
+
+    .audio-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      padding-right: 8px;
+      padding-left: 10px;
+    }
+
+    .audio-container .microphone-icon {
+      position: relative;
+      margin-left: -67px;
+      margin-bottom: -25px;
+      font-size: 22px;
+      color: #4ad954;
+    }
+
+    .audio-container .microphone-icon.blue {
+      color: #3db8ee;
+    }
+
+    /* (Restante do CSS permanece igual) */
+  </style>
+</head>
+<body>
+  <div class="audio-container" id="audioContainer">
+    <!-- Link do Áudio -->
+    <audio class="plyr" src="https://minio-production-5e33.up.railway.app/typebot/public/workspaces/cltat2vjd0001qnxewbvshpxn/typebots/cltat9o4o0007qnxei7tovzp3/blocks/b8nynohf04t3e8kze5nlo427?v=1709430162099"></audio>
+    <!-- Link da Imagem -->
+    <img src="https://minio-production-5e33.up.railway.app/typebot/public/workspaces/cltat2vjd0001qnxewbvshpxn/typebots/cltat9o4o0007qnxei7tovzp3/hostAvatar?v=1709432924311" alt="Imagem">
+    <div class="microphone-icon">
+      <i class="fas fa-microphone"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.plyr.io/3.6.7/plyr.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const player = new Plyr('.plyr', {
+        controls: ['play', 'progress', 'current-time', 'duration']
+      });
+
+      const audioElement = document.querySelector('.plyr');
+      const currentTimeElement = document.querySelector('.plyr__time--current');
+      const durationElement = document.querySelector('.plyr__time--duration');
+      const microphoneIcon = document.querySelector('.microphone-icon');
+
+      currentTimeElement.classList.add('hide'); // Esconde ao iniciar
+
+      audioElement.addEventListener('play', function() {
+        currentTimeElement.classList.remove('hide');
+        durationElement.classList.add('hide');
+        microphoneIcon.classList.add('blue');
+        audioElement.classList.add('blue');
+        audioElement.style.setProperty('--range-thumb-background', '#3db8ee');
+      });
+
+      audioElement.addEventListener('pause', function() {
+        currentTimeElement.classList.add('hide');
+        durationElement.classList.remove('hide');
+      });
+
+      const audioContainer = document.getElementById('audioContainer');
+      audioContainer.addEventListener('click', function() {
+        if (audioElement.paused) {
+          audioElement.play();
+        } else {
+          audioElement.pause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
